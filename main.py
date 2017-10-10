@@ -8,15 +8,22 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
 
-class Task(db.Model):
+class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    completed = db.Column(db.Boolean)
+    title = db.Column(db.String(120))
+    body = db.Column(db.Text)
+    pub_date = db.Column(db.DateTime)
 
-    def __init__(self, name):
-        self.name = name
-        self.completed = False
+    def __init__(self, title, body, pub_date=None):
+        self.title = title
+        self.body = body
+        if pub_date is None:
+            pub_date = datetime.utcnow()
+        self.pub_date = pub_date
+
+    def __repr__(self):
+        return '<Blog %r>' % self.title
 
 
 @app.route('/', methods=['POST', 'GET'])
