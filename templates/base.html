@@ -1,10 +1,20 @@
-<!doctype html>
-<html>
-    <head>
-        <title>{{title}}</title>
-    </head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="@BrrGrr">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <header>
+        <h1>{{title}}</h1>
+        <nav><a href="/blog">Blog</a> || <a href="/newpost">Add New</a></nav>
+    </header>
     {% block content %}
     {% endblock %}
 
