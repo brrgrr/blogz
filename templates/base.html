@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Build-a-Blog | {{page_title}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -17,7 +18,7 @@
     </header>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul class=flashes>
+    <ul class="flashes">
         {% for category, message in messages %}
         <li class="{{ category }}">{{ message }}</li>
         {% endfor %}
