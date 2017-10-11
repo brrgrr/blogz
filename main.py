@@ -31,7 +31,7 @@ def index():
 def blog():
     blog_id = request.args.get('id')
     if blog_id == None:
-        blogs = Blog.query.all()
+        blogs = Blog.query.order_by(Blog.pub_date.desc()).all()
         return render_template('blog.html', page_title="Build-a-Blog", blogs=blogs)
     else:
         post = Blog.query.get(blog_id)
