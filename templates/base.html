@@ -7,14 +7,23 @@
     <meta name="author" content="@BrrGrr">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Build-a-Blog | {{title}}</title>
+    <title>Build-a-Blog | {{page_title}}</title>
 </head>
 
 <body>
     <header>
-        <h1>{{title}}</h1>
+        <h1>{{page_title}}</h1>
         <nav><a href="/blog">Blog</a> || <a href="/newpost">Add New</a></nav>
     </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     {% block content %}
     {% endblock %}
 

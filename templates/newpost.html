@@ -5,19 +5,19 @@
     <hr />
     <section>
         <h2>Add a Blog Entry</h2>
-        <form method='post'>
+        <form method="POST">
             <table>
                 <tr>
                     <td><label for="title">Post Title:</label></td>
-                    <td><input type="text" name="title" /></td>
+                    <td><input type="text" name="title" value="{{title}}" required/></td>
                 </tr>
                 <tr>
                     <td><label for="body">Post Body:</label></td>
-                    <td><textarea name="body" cols="30" rows="10"></textarea>
+                    <td><textarea name="body" cols="30" rows="10" required>{{body}}</textarea>
                     </td>
                 </tr>
             </table>
-            <input type="submit" value='Add Entry' />
+            <input type="submit" value="Add Entry" />
         </form>
     </section>
 
