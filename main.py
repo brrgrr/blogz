@@ -1,25 +1,7 @@
-from datetime import datetime
 from flask import Flask, request, redirect, render_template, flash
-from flask_sqlalchemy import SQLAlchemy
+from app import app, db
+from models import Blog
 
-app = Flask(__name__)
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:HM1m34mIk7IdwoRH@localhost:8889/blogz'
-app.config['SQLALCHEMY_ECHO'] = True
-db = SQLAlchemy(app)
-app.secret_key = 'V076143I8P1Unt&5%KTRkwJCuY@EgsdU'
-
-
-class Blog(db.Model):
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), nullable=False)
-    body = db.Column(db.Text, nullable=False)
-    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __init__(self, title, body):
-        self.title = title
-        self.body = body
 
 
 @app.route('/')
