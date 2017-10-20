@@ -1,23 +1,24 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<section>
+    {% if posts|length == 0 %}
 
-    <hr />
-    <section>
-        {% if blogs|length == 0 %}
+    <p>No posts available.</p>
 
-        <p>No posts available.</p>
-
-        {% else %}
-<ul>
-            {% for blog in blogs %}
-            <li>
-                <h4><a href=/blog?id={{blog.id}}>{{blog.title}}</a></h4>
-                <!-- <p>{{blog.body}}</p> -->
-            </li>
-            {% endfor %}
-</ul>
-        {% endif %}
-    </section>
+    {% else %}
+    <div class="all-blog-list list-group">
+        {% for post in posts %}
+        <a class="list-group-item row" href="/blog?id={{post.id}}">
+            <h4 class="list-group-item-heading text-capitalize col-sm-8">{{post.title}}</h4>
+            <p class="list-group-item-text col-sm-3">{{post.pub_date}}</p>
+            <div class="list-group-item-text col-sm-1"></div>
+        </a>
+        <div class="author">by
+            <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
 
 {% endblock %}

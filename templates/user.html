@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section>
+    {% if posts|length == 0 %}
+
+    <p>No posts available.</p>
+
+    {% else %}
+    <div class="blog-list list-group">
+        {% for post in posts %}
+        <a class="list-group-item row" href="/blog?id={{post.id}}">
+            <h4 class="list-group-item-heading text-capitalize col-sm-9">{{post.title}}</h4>
+            <p class="list-group-item-text col-sm-3">{{post.pub_date}}</p>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

@@ -2,11 +2,12 @@
 
 {% block content %}
 
-    <hr />
-    <article>
-        <h2><a href=/blog?id={{post.id}}>{{post.title}}</a></h2>
-        <p>{{post.body}}</p>
-    </article>
+<article>
+    <h2 class="text-capitalize">{{post.title}}</h2>
+    <p>{{post.body}}</p>
+    <p><small>Posted by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a>
+        on {{post.pub_date}}</small></p>
+</article>
 
 
 {% endblock %}
