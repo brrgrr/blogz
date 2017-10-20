@@ -1,9 +1,9 @@
-from string import capwords
 from flask import request, redirect, render_template, session, flash
 from app import app, db
 from models import Blog, User
 
-
+# pagination
+POSTS_PER_PAGE = 5
 
 def logged_in():
     if 'username' in session:
@@ -31,12 +31,13 @@ def logout():
         flash('Logged out.', 'success')
     return redirect('/blog')
 
-
 @app.route('/')
-def index():
+@app.route('/index')
+@app.route('/index/<int:page>')
+def index(page=1):
     page_title = 'Home'
     #users = User.query.all()
-    users = User.query.order_by(User.username).all()
+    users = User.query.order_by(User.username).paginate(page, POSTS_PER_PAGE, False)
     return render_template('index.html', page_title=page_title, users=users, logged_in=logged_in())
 
 
@@ -102,18 +103,20 @@ def signup():
 
 
 @app.route('/blog', methods=['POST', 'GET'])
-def blog():
+@app.route('/blog/<int:page>', methods=['POST', 'GET'])
+def blog(page=1):
     page_title = 'Posts'
     user_id = request.args.get('user')
     blog_id = request.args.get('id')
     if user_id != None:
         owner = User.query.get(user_id)
-        return render_template('user.html', page_title=page_title + ' by ' + owner.username, posts=owner.blogs, logged_in=logged_in())
+        posts = Blog.query.filter(Blog.owner_id == user_id).order_by(Blog.pub_date.desc()).paginate(page, POSTS_PER_PAGE, False)
+        return render_template('user.html', page_title=page_title + ' by ' + owner.username, posts=posts, logged_in=logged_in(), user_id=user_id)
     if blog_id != None:
         post = Blog.query.get(blog_id)
         return render_template('post.html', page_title=page_title + ': ' + post.title, post=post, logged_in=logged_in())
 
-    posts = Blog.query.order_by(Blog.pub_date.desc()).all()
+    posts = Blog.query.order_by(Blog.pub_date.desc()).paginate(page, POSTS_PER_PAGE, False)
     return render_template('blog.html', page_title='All ' + page_title, posts=posts, logged_in=logged_in())
 
 

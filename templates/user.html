@@ -2,19 +2,22 @@
 {% block content %}
 
 <section>
-    {% if posts|length == 0 %}
+    {% if posts.items|length == 0 %}
 
     <p>No posts available.</p>
 
     {% else %}
     <div class="blog-list list-group">
-        {% for post in posts %}
+        {% for post in posts.items %}
         <a class="list-group-item row" href="/blog?id={{post.id}}">
             <h4 class="list-group-item-heading text-capitalize col-sm-9">{{post.title}}</h4>
             <p class="list-group-item-text col-sm-3">{{post.pub_date}}</p>
         </a>
         {% endfor %}
     </div>
+
+    {% if posts.has_prev or posts.has_next %}{{ render_pagination(posts, 'blog', '?user='+ user_id) }}{% endif %}
+
     {% endif %}
 </section>
 
