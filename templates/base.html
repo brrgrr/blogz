@@ -85,16 +85,16 @@
 
     <main class="container">
         {% macro render_pagination(pagination, endpoint, qs='') %}
-        <div class="pagination">
+        <div class="pagination row text-center" >
         {%- for page in pagination.iter_pages() %}
             {% if page %}
-            {% if page != pagination.page %}
-                <a href="{{ url_for(endpoint, page=page) }}{% if qs %}{{qs}}{% endif %}">{{ page }}</a>
+                {% if page != pagination.page %}
+                    <a class="btn btn-default btn-lg" href="{{ url_for(endpoint, page=page) }}{% if qs %}{{qs}}{% endif %}">{{ page }}</a>
+                {% else %}
+                    <strong class="btn btn-default btn-lg disabled active">{{ page }}</strong>
+                {% endif %}
             {% else %}
-                <strong>{{ page }}</strong>
-            {% endif %}
-            {% else %}
-            <span class="ellipsis">…</span>
+                <span class="ellipsis">…</span>
             {% endif %}
         {%- endfor %}
         </div>
@@ -110,7 +110,7 @@
         </div>
         <div class="row">
             <div class="text-center">
-                <i class="mdi mdi-hamburger" aria-hidden="true"></i>
+                <a href="/"><i class="mdi mdi-hamburger" aria-hidden="true"></i></a>
             </div>
         </div>
     </footer>
