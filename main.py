@@ -1,6 +1,7 @@
 from flask import request, redirect, render_template, session, flash
 from app import app, db
 from models import Blog, User
+from hashutils import check_pw_hash
 
 # pagination
 POSTS_PER_PAGE = 5
@@ -48,12 +49,12 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        if user and user.password == password:
+        if user and check_pw_hash(password, user.pw_hash):
             # User enters a username that is stored in the database with the correct password and is redirected to the /newpost page with their username being stored in a session.
             session['username'] = username
             flash('Logged in.', 'success')
             return redirect('/newpost')
-        elif user and user.password != password:
+        elif user and not check_pw_hash(password, user.pw_hash):
             # User enters a username that is stored in the database with an incorrect password and is redirected to the /login page with a message that their password is incorrect.
             flash('Password is incorrect.', 'danger')
             return render_template('login.html', page_title=page_title, username=username, logged_in=logged_in())
