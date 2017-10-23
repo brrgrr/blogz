@@ -11,7 +11,9 @@
 {% if post.owner.username == logged_in.username %}
     <form method="POST" action="/delete-post" style="display:inline-block;" class="pull-right">
         <input type="hidden" name="post-id" value="{{post.id}}" />
-        <input class="btn btn-danger" type="submit" value="Delete Post!" />
+        <button class="btn btn-danger" type="submit" value="Delete Post">
+            <i class="mdi mdi-delete" aria-hidden="true"> Delete Post!</i>
+        </button>
     </form>
 {% endif %}
 
