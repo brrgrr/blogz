@@ -8,6 +8,12 @@
     <p><small>Posted by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a>
         on {{post.pub_date}}</small></p>
 </article>
+{% if post.owner.username == logged_in.username %}
+    <form method="POST" action="/delete-post" style="display:inline-block;" class="pull-right">
+        <input type="hidden" name="post-id" value="{{post.id}}" />
+        <input class="btn btn-danger" type="submit" value="Delete Post!" />
+    </form>
+{% endif %}
 
 
 {% endblock %}

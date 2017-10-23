@@ -20,6 +20,7 @@ class Blog(db.Model):
     title = db.Column(db.String(120), nullable=False)
     body = db.Column(db.Text, nullable=False)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    deleted = db.Column(db.Boolean, nullable=False, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, title, body, owner):

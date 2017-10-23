@@ -110,13 +110,13 @@ def blog(page=1):
     blog_id = request.args.get('id')
     if user_id != None:
         owner = User.query.get(user_id)
-        posts = Blog.query.filter(Blog.owner_id == user_id).order_by(Blog.pub_date.desc()).paginate(page, POSTS_PER_PAGE, False)
+        posts = Blog.query.filter(Blog.owner_id == user_id, Blog.deleted == False).order_by(Blog.pub_date.desc()).paginate(page, POSTS_PER_PAGE, False)
         return render_template('user.html', page_title=page_title + ' by ' + owner.username, posts=posts, logged_in=logged_in(), user_id=user_id)
     if blog_id != None:
         post = Blog.query.get(blog_id)
-        return render_template('post.html', page_title=page_title + ': ' + post.title, post=post, logged_in=logged_in())
+        return render_template('post.html', page_title='Post: ' + post.title, post=post, logged_in=logged_in())
 
-    posts = Blog.query.order_by(Blog.pub_date.desc()).paginate(page, POSTS_PER_PAGE, False)
+    posts = Blog.query.filter_by(deleted=False).order_by(Blog.pub_date.desc()).paginate(page, POSTS_PER_PAGE, False)
     return render_template('blog.html', page_title='All ' + page_title, posts=posts, logged_in=logged_in())
 
 
@@ -139,6 +139,19 @@ def newpost():
             return redirect('/blog?id=' + str(new_blog.id))
     return render_template('newpost.html', page_title=page_title, logged_in=logged_in())
 
+@app.route('/delete-post', methods=['POST'])
+def delete_post():
+    current = logged_in()
+    post_id = int(request.form['post-id'])
+    post = Blog.query.get(post_id)
+    if post.owner_id == current.id:
+        post.deleted = True
+        db.session.add(post)
+        db.session.commit()
+        flash('Post deleted.', 'warning')
+    else:
+        flash('Permission denied', 'danger')
+    return redirect('/blog?user='+str(current.id))
 
 if __name__ == '__main__':
     app.run()
