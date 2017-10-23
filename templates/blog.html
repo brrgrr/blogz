@@ -9,13 +9,13 @@
     {% else %}
     <div class="all-blog-list list-group">
         {% for post in posts.items %}
-        <a class="list-group-item row" href="/blog?id={{post.id}}">
-            <h4 class="list-group-item-heading text-capitalize col-sm-8">{{post.title}}</h4>
-            <p class="list-group-item-text col-sm-3">{{post.pub_date}}</p>
-            <div class="list-group-item-text col-sm-1"></div>
-        </a>
-        <div class="author">by
-            <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a>
+        <div class="list-group-item row">
+            <a href="/blog?id={{post.id}}" class="list-group-item-heading h3 text-capitalize col-sm-8">{{post.title}}</a>
+            <p class="list-group-item-text col-sm-4 small">
+                by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a>
+                on {{post.pub_date}}</p>
+
+            <p class="list-group-item-text col-sm-12">{{post.body}}</p>
         </div>
         {% endfor %}
     </div>

@@ -9,10 +9,14 @@
     {% else %}
     <div class="blog-list list-group">
         {% for post in posts.items %}
-        <a class="list-group-item row" href="/blog?id={{post.id}}">
-            <h4 class="list-group-item-heading text-capitalize col-sm-9">{{post.title}}</h4>
-            <p class="list-group-item-text col-sm-3">{{post.pub_date}}</p>
-        </a>
+
+        <div class="list-group-item row">
+            <a  href="/blog?id={{post.id}}" class="list-group-item-heading h3 text-capitalize col-sm-9">{{post.title}}</a>
+            <p class="list-group-item-text col-sm-3 small">{{post.pub_date}}</p>
+
+            <p class="list-group-item-text col-sm-12">{{post.body}}</p>
+        </div>
+
         {% endfor %}
     </div>
 
