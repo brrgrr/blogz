@@ -8,6 +8,7 @@
         {% for user in users.items %}
         <a class="list-group-item" href="/blog?user={{user.id}}">
             <div class="h4 list-group-item-heading">{{user.username}}</div>
+            <span class="badge">{{user.count}}</span>
         </a>
         {% endfor %}
     </div>
